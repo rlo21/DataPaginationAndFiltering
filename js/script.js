@@ -3,9 +3,6 @@ Treehouse Techdegree:
 FSJS Project 2 - Data Pagination and Filtering
 Author of script.js: Rosa Lopez
 */
-
-
-
 /*
 For assistance:
    Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
@@ -16,22 +13,21 @@ For assistance:
 Create an event listener to listen for clicks on the link-list variable that you created earlier.
 */
 
-// Global Variables //
-let itemsPerPage = 9;
 
 /*
 Create the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
 */
 function showPage (list,page) {
-   
+    // Variables
+    let itemsPerPage = 9;
+    //const linkList = document.querySelector('link-list');
+    const studentList = document.querySelector('.student-list'); //or querySelector('.student-list')  OR document.querySelector("ul.student-list");
+    studentList.innerHTML = '';
+
    for (let i = 0; i < list.length; i++) {
-      // Variables
       const indexStart = (page * itemsPerPage) - itemsPerPage;
       const indexEnd = page * itemsPerPage;
-      const linkList = document.querySelector(link-list);
-      let studentList = document.selectElementByClassName(studnet-list);
-      studentList.document.innerHTML = '';
 
       //loop over list parameter
       while ( i >= indexStart &&  i <= indexEnd) {
@@ -48,19 +44,43 @@ function showPage (list,page) {
          </li>`;
 
       studentList.insertAdjacentHTML("beforeend", studentItem);
-
       }
-      
-  
    }
 };
-function showPage();
+
 
 /*
 Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
+function addPagination(list) {
+   const numOfPages = Math.ceil( list.length / itemsPerPage )
+   const linkList = document.querySelector('.link-list');
+   linkList.innerHTML = '';
+   for ( let i = 1; i <= numOfPages; i++ ) {
+      let button = `
+         <li>
+            <button type="button">${i}</button>
+         </li>
+      `;
+      linkList.insertAdjacentHTML('beforeend', button);
+   }
+   const firstButton = linkList.querySelector('button');
+   firstButton.className = 'active';
+   linkList.addEventListener('click', (e) => {
+      if (e.target.tagName === "BUTTON" ) {
+         let activeButton = document.querySelector('.active');
+         activeButton.className = '';
+         e.target.className  = 'active';
+         showPage(list, e.target.textContent);
+      }
+   });
+   
+}
+
 
 
 
 // Call functions
+console.log (showPage(data, 1));
+console.log(addPagination(data));
