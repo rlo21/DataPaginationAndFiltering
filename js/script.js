@@ -18,9 +18,11 @@ Create an event listener to listen for clicks on the link-list variable that you
 Create the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
 */
+//global variable(s)
+let itemsPerPage = 9;
+
 function showPage (list,page) {
-    // Variables
-    let itemsPerPage = 9;
+    
     //const linkList = document.querySelector('link-list');
     const studentList = document.querySelector('.student-list'); //or querySelector('.student-list')  OR document.querySelector("ul.student-list");
     studentList.innerHTML = '';
@@ -30,7 +32,7 @@ function showPage (list,page) {
       const indexEnd = page * itemsPerPage;
 
       //loop over list parameter
-      while ( i >= indexStart &&  i <= indexEnd) {
+      if ( i >= indexStart &&  i <= indexEnd) {
          let studentItem = `  
          <li class="student-item cf">
             <div class="student-details">
@@ -53,24 +55,27 @@ function showPage (list,page) {
 Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
+
 function addPagination(list) {
    const numOfPages = Math.ceil( list.length / itemsPerPage )
    const linkList = document.querySelector('.link-list');
    linkList.innerHTML = '';
    for ( let i = 1; i <= numOfPages; i++ ) {
-      let button = `
+      let btn = `
          <li>
             <button type="button">${i}</button>
          </li>
       `;
-      linkList.insertAdjacentHTML('beforeend', button);
+      linkList.insertAdjacentHTML('beforeend', btn);
    }
-   const firstButton = linkList.querySelector('button');
-   firstButton.className = 'active';
-   linkList.addEventListener('click', (e) => {
+      const firstButton = linkList.querySelector('button');
+      firstButton.className = 'active';
+      
+      linkList.addEventListener('click', (e) => {
       if (e.target.tagName === "BUTTON" ) {
          let activeButton = document.querySelector('.active');
          activeButton.className = '';
+
          e.target.className  = 'active';
          showPage(list, e.target.textContent);
       }
@@ -82,5 +87,5 @@ function addPagination(list) {
 
 
 // Call functions
-console.log (showPage(data, 1));
-console.log(addPagination(data));
+showPage(data, 1);
+addPagination(data);
