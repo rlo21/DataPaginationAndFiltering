@@ -21,19 +21,18 @@ This function will create and insert/append the elements needed to display a "pa
 //global variable(s)
 let itemsPerPage = 9;
 
+
 function showPage (list,page) {
-    
-    //const linkList = document.querySelector('link-list');
-    const studentList = document.querySelector('.student-list'); //or querySelector('.student-list')  OR document.querySelector("ul.student-list");
-    studentList.innerHTML = '';
+   const studentList = document.querySelector('.student-list');
+   studentList.innerHTML = '';
 
    for (let i = 0; i < list.length; i++) {
       const indexStart = (page * itemsPerPage) - itemsPerPage;
       const indexEnd = page * itemsPerPage;
 
-      //loop over list parameter
+      //Display informaiton for each student over loop 
       if ( i >= indexStart &&  i <= indexEnd) {
-         let studentItem = `  
+         let studentInfo = `  
          <li class="student-item cf">
             <div class="student-details">
                <img class="avatar" src=${list[i].picture.large} alt="Profile Picture">
@@ -45,7 +44,7 @@ function showPage (list,page) {
             </div>
          </li>`;
 
-      studentList.insertAdjacentHTML("beforeend", studentItem);
+      studentList.insertAdjacentHTML("beforeend", studentInfo);
       }
    }
 };
@@ -60,21 +59,24 @@ function addPagination(list) {
    const numOfPages = Math.ceil( list.length / itemsPerPage )
    const linkList = document.querySelector('.link-list');
    linkList.innerHTML = '';
+   
+   //create pagination buttons
    for ( let i = 1; i <= numOfPages; i++ ) {
-      let btn = `
+      const btn = `
          <li>
             <button type="button">${i}</button>
          </li>
       `;
       linkList.insertAdjacentHTML('beforeend', btn);
    }
-      const firstButton = linkList.querySelector('button');
-      firstButton.className = 'active';
+      const firstBtn = linkList.querySelector('button');
+      firstBtn.className = 'active';
       
+      //make button active when clicked
       linkList.addEventListener('click', (e) => {
       if (e.target.tagName === "BUTTON" ) {
-         let activeButton = document.querySelector('.active');
-         activeButton.className = '';
+         let activeBtn = document.querySelector('.active');
+         activeBtn.className = '';
 
          e.target.className  = 'active';
          showPage(list, e.target.textContent);
@@ -82,9 +84,6 @@ function addPagination(list) {
    });
    
 }
-
-
-
 
 // Call functions
 showPage(data, 1);
